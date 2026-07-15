@@ -9,18 +9,72 @@
 
 <body>
 
-  <header>
-    <h1>Shree Mahendra Secondary School</h1>
-    <p>Matehiya, Narainapur–5, Banke, Nepal</p>
-  </header>
+<header>
+  <h1>Shree Mahendra Secondary School</h1>
+  <p>Matehiya, Narainapur-5, Banke, Nepal</p>
+</header>
 
-  <main>
-    <h2>Welcome</h2>
-    <p>
-      Welcome to the official website of
-      Shree Mahendra Secondary School.
-    </p>
-  </main>
+<main>
+
+  <h2>Welcome</h2>
+
+  <p>
+    Welcome to the official website of
+    Shree Mahendra Secondary School.
+  </p>
+
+  <section id="latest-notices">
+
+    <h2>📢 Latest Notices</h2>
+
+    <div id="notice-list">
+      Loading notices...
+    </div>
+
+  </section>
+
+</main>
+
+<script type="module">
+
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+const supabase = createClient(
+"https://jisoljwfzmamblbccemr.supabase.co",
+"sb_publishable__Iss5xP0CG2DyJ0PmrwKvg__Prj5Kec"
+);
+
+async function loadNotices(){
+
+const {data,error}=await supabase
+.from("notices")
+.select("*")
+.order("created_at",{ascending:false});
+
+const list=document.getElementById("notice-list");
+
+if(error){
+list.innerHTML="<p>Failed to load notices.</p>";
+return;
+}
+
+if(!data.length){
+list.innerHTML="<p>No notices available.</p>";
+return;
+}
+
+list.innerHTML=data.map(n=>`
+<div style="background:#fff;padding:15px;margin-bottom:15px;border-left:5px solid #0d6efd;box-shadow:0 2px 8px rgba(0,0,0,.1);">
+<h3>${n.title}</h3>
+<p>${n.description}</p>
+</div>
+`).join("");
+
+}
+
+loadNotices();
+
+</script>
 
 </body>
 </html>
