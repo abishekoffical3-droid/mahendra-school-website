@@ -4,77 +4,95 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shree Mahendra Secondary School</title>
+
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header>
-  <h1>Shree Mahendra Secondary School</h1>
-  <p>Matehiya, Narainapur-5, Banke, Nepal</p>
+<header class="header">
+
+  <div class="logo-box">
+    <img src="assets/logo.png" alt="School Logo" class="logo">
+
+    <div>
+      <h1>Shree Mahendra Secondary School</h1>
+      <p>Matehiya, Narainapur-5, Banke, Nepal</p>
+    </div>
+
+  </div>
+
+  <nav>
+
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Teachers</a>
+    <a href="#">Gallery</a>
+    <a href="#">Contact</a>
+
+  </nav>
+
 </header>
+
+<section class="hero">
+
+  <img src="assets/hero.jpg" alt="School">
+
+  <div class="hero-text">
+
+    <h2>Welcome to Shree Mahendra Secondary School</h2>
+
+    <p>
+      Quality Education For A Bright Future
+    </p>
+
+  </div>
+
+</section>
 
 <main>
 
-  <h2>Welcome</h2>
+<section class="welcome">
 
-  <p>
-    Welcome to the official website of
-    Shree Mahendra Secondary School.
-  </p>
+<h2>Welcome</h2>
 
-  <section id="latest-notices">
+<p>
 
-    <h2>📢 Latest Notices</h2>
+Welcome to the official website of
+Shree Mahendra Secondary School.
 
-    <div id="notice-list">
-      Loading notices...
-    </div>
+We are committed to providing quality education,
+discipline, innovation and overall development of students.
 
-  </section>
+</p>
+
+</section>
+
+<section class="notice-section">
+
+<h2>📢 Latest Notices</h2>
+
+<div id="notice-list">
+
+Loading notices...
+
+</div>
+
+</section>
 
 </main>
 
-<script type="module">
+<footer>
 
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+<p>
 
-const supabase = createClient(
-"https://jisoljwfzmamblbccemr.supabase.co",
-"sb_publishable__Iss5xP0CG2DyJ0PmrwKvg__Prj5Kec"
-);
+© 2026 Shree Mahendra Secondary School
 
-async function loadNotices(){
+</p>
 
-const {data,error}=await supabase
-.from("notices")
-.select("*")
-.order("created_at",{ascending:false});
+</footer>
 
-const list=document.getElementById("notice-list");
-
-if(error){
-list.innerHTML="<p>Failed to load notices.</p>";
-return;
-}
-
-if(!data.length){
-list.innerHTML="<p>No notices available.</p>";
-return;
-}
-
-list.innerHTML=data.map(n=>`
-<div style="background:#fff;padding:15px;margin-bottom:15px;border-left:5px solid #0d6efd;box-shadow:0 2px 8px rgba(0,0,0,.1);">
-<h3>${n.title}</h3>
-<p>${n.description}</p>
-</div>
-`).join("");
-
-}
-
-loadNotices();
-
-</script>
+<script type="module" src="js/notices.js"></script>
 
 </body>
 </html>
